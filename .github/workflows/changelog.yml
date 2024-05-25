@@ -26,10 +26,11 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update changelog
+        shell: bash
         run: |
-          echo "## New Changes\n" > changelog.md
+          echo "## New Changes\n" >> changelog.md
           echo ${{ steps.github_release.outputs.changelog }}
-          echo "${{ steps.github_release.outputs.changelog }}\n" > changelog.md
+          echo "${{ steps.github_release.outputs.changelog }}\n" >> changelog.md
 
       # Configure git
       - name: Configure Git
