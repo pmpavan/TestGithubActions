@@ -56,7 +56,7 @@ jobs:
       # Commit and push changes
       - name: Commit and push changes
         run: |
-          git checkout master
+          git checkout origin/master
           git add changelog.md
           git commit -m "Update changelog"
           git push
