@@ -26,6 +26,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
+        id: build_changelog
         uses: mikepenz/action-gh-release@v0.2.0-a03 #softprops/action-gh-release
         with:
           body: ${{steps.github_release.outputs.changelog}}
@@ -33,7 +34,7 @@ jobs:
       - name: Update changelog
         run: |
           echo "## New Changes\n" >> changelog.md
-          echo ${{steps.build_changelog.outputs.changelog}} >> changelog.md
+          echo ${{steps.github_release.outputs.changelog}} >> changelog.md
 
       # Configure git
       - name: Configure Git
