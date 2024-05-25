@@ -19,3 +19,25 @@ jobs:
         uses: mikepenz/action-gh-release@v0.2.0-a03 #softprops/action-gh-release
         with:
           body: ${{steps.github_release.outputs.changelog}}
+
+      # Append or create content for changelog.md
+      - name: Update changelog
+        run: |
+          echo "## New Changes\n" >> changelog.md
+          echo "Describe the new changes here." >> changelog.md
+
+      # Configure git
+      - name: Configure Git
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      # Commit and push changes
+      - name: Commit and push changes
+        run: |
+          git add changelog.md
+          git commit -m "Update changelog"
+          git push
+        env:
+          # Set the environment variable GITHUB_TOKEN to use the GitHub Actions token for authentication
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
