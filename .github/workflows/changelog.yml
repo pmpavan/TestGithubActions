@@ -48,9 +48,7 @@ jobs:
 
       # Verify Git status
       - name: Verify Git status
-        run: |
-          cd ..
-          git status
+        run: git status
         env:
           # Set the environment variable GITHUB_TOKEN to use the GitHub Actions token for authentication
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
