@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0  # Fetch all history for all branches and tags
 
@@ -26,15 +26,16 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create Release
+        id: build_changelog
         uses: mikepenz/action-gh-release@v0.2.0-a03 #softprops/action-gh-release
         with:
           body: ${{steps.github_release.outputs.changelog}}
 
       - name: Update changelog
         run: |
-          echo "## New Changes\n" >> changelog.md
+          echo "## New Changes\n" > changelog.md
           echo ${{ steps.github_release.outputs.changelog }}
-          echo "${{ steps.github_release.outputs.changelog }}\n" >> changelog.md
+          echo "${{ steps.github_release.outputs.changelog }}\n" > changelog.md
 
       # Configure git
       - name: Configure Git
