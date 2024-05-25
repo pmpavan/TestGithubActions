@@ -57,11 +57,11 @@ jobs:
       - name: Commit and push changes
         run: |
           git fetch origin
-          git branch temp-branch
+#          git branch temp-branch
+          git checkout master
           git add changelog.md
           git commit -m "Update changelog"
-          git checkout master
-          git merge temp-branch
+#          git merge temp-branch
           git push origin HEAD
         env:
           # Set the environment variable GITHUB_TOKEN to use the GitHub Actions token for authentication
