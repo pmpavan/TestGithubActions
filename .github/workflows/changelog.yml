@@ -30,6 +30,10 @@ jobs:
         with:
           body: ${{steps.github_release.outputs.changelog}}
 
+      - name: Update changelog
+        run: |
+          echo "## New Changes\n" >> changelog.md
+          echo ${{steps.build_changelog.outputs.changelog}} >> changelog.md
 
       # Configure git
       - name: Configure Git
