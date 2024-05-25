@@ -1,0 +1,78 @@
+name: Changelog On Merge
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+      - name: Verify Java version
+        run: java -version
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v4
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        uses: mikepenz/action-gh-release@v0.2.0-a03 #softprops/action-gh-release
+        with:
+          body: ${{steps.github_release.outputs.changelog}}
+
+      # Append or create content for changelog.md
+      - name: Update changelog
+        run: |
+          echo "## New Changes\n" >> changelog.md
+          echo "Describe the new changes here." >> changelog.md
+
+      # Configure git
+      - name: Configure Git
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+
+      - name: pwd
+        run: pwd
+
+      - name: ls files
+        run: ls
+
+      # Verify Git status
+      - name: Verify Git status
+        run: git status
+        env:
+          # Set the environment variable GITHUB_TOKEN to use the GitHub Actions token for authentication
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # Commit and push changes
+      - name: Commit and push changes
+        run: |
+          git add changelog.md
+          git commit -m "Update changelog"
+          git push
+        env:
+          # Set the environment variable GITHUB_TOKEN to use the GitHub Actions token for authentication
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+
