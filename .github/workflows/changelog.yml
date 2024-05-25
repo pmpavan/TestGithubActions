@@ -14,20 +14,20 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for all branches and tags
 
-      - name: Verify tag is from master
-        id: check_master
-        run: |
-          # Fetch the master branch
-          git fetch origin master:master
-          # Check if the tag is on the master branch
-          if git merge-base --is-ancestor master HEAD; then
-            echo "is_master=true" >> $GITHUB_ENV
-          else
-            echo "is_master=false" >> $GITHUB_ENV
-
-      - name: Exit if not from master
-        if: env.is_master == 'false'
-        run: exit 0
+#      - name: Verify tag is from master
+#        id: check_master
+#        run: |
+#          # Fetch the master branch
+#          git fetch origin master:master
+#          # Check if the tag is on the master branch
+#          if git merge-base --is-ancestor master HEAD; then
+#            echo "is_master=true" >> $GITHUB_ENV
+#          else
+#            echo "is_master=false" >> $GITHUB_ENV
+#
+#      - name: Exit if not from master
+#        if: env.is_master == 'false'
+#        run: exit 0
 
       - name: Verify repository
         run: ls -la
