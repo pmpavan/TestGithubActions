@@ -38,7 +38,9 @@ jobs:
       - name: Verify Git status
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: git status
+        run: |
+          ls
+          git status
 
       # Commit and push changes
       - name: Commit and push changes
