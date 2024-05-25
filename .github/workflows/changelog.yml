@@ -35,6 +35,8 @@ jobs:
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -84,7 +86,7 @@ jobs:
       - name: Update changelog
         run: |
           echo "## New Changes\n" >> changelog.md
-          echo ${{ steps.tag.outputs.tag_description }} >> changelog.md
+          echo ${{steps.build_changelog.outputs.changelog}} >> changelog.md
 
       # Configure git
       - name: Configure Git
@@ -94,10 +96,6 @@ jobs:
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
-      - name: pwd
-        run: pwd
-      - name: ls files
-        run: ls
       # Verify Git status
       - name: Verify Git status
         run: git status
