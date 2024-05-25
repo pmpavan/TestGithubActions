@@ -33,7 +33,8 @@ jobs:
       - name: Update changelog
         run: |
           echo "## New Changes\n" >> changelog.md
-          echo ${{steps.build_changelog.outputs.changelog}} >> changelog.md
+          echo ${{ steps.github_release.outputs.changelog }}
+          echo ${{ steps.github_release.outputs.changelog }} >> changelog.md
 
       # Configure git
       - name: Configure Git
