@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.dokka")
 }
 
 android {
@@ -68,3 +69,13 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
 }
+
+//tasks.named("dokkaHtml").configure {
+//    it as org.jetbrains.dokka.gradle.DokkaTask
+//    it.outputDirectory.set(file("documentation/html"))
+//    it.dokkaSourceSets.configureEach {
+//        if (it.name == "main") {
+//            it.skipDeprecated.set(true)
+//        }
+//    }
+//}

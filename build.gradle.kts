@@ -4,3 +4,15 @@ plugins {
     id("org.jetbrains.kotlin.android") version "1.8.10" apply false
     id("org.jetbrains.dokka") version "1.9.20" apply false
 }
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:1.9.20")
+
+        classpath("org.jetbrains.dokka:android-documentation-plugin:1.9.20")
+    }
+}
+
